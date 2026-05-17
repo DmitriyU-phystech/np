@@ -7,11 +7,13 @@ output_dir = r"C:\Users\User\Desktop\2 курс\информатика\np-202604
 
 for filename in os.listdir(input_dir):
      data = np.loadtxt(os.path.join(input_dir, filename))
-     smoothed = np.zeros_like(data)
+     n = len(data)
+     cumsum = np.cumsum(np.insert(data, 0, 0))
 
-     for i in range(len(data)):
-         start = max(0, i - 9)
-         smoothed[i] = np.mean(data[start:i+1])
+     smoothed = np.zeros(n)
+     smoothed[9:] = (cumsum[10:] - cumsum[:-10]) / 10.0
+
+     smoothed[:9] = cumsum[1:10] / np.arange(1, 10)
 
      fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8))
 

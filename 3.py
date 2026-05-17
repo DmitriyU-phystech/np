@@ -6,13 +6,9 @@ from io import BytesIO
 u = np.loadtxt(r'C:\Users\User\Desktop\2 курс\информатика\np-20260429T194436Z-3-001\np\3.dat')
 N = len(u)
 
-A = np.zeros((N, N))
-for i in range(N):
-    for j in range(N):
-        if i == j:
-            A[i, j] = 1
-        elif i == (j + 1) % N:
-            A[i, j] = -1
+A = np.eye(N)
+A += np.diag(-np.ones(N-1), k=-1)
+A[0, N-1] = -1
 
 steps = 255
 frames = []
